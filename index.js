@@ -37,23 +37,25 @@ $(document).keydown(function() {
 });
 
 $("div.btn").click(function(ev) {
-  var id = $(this).attr("id");
-  pressedAnimationName(id);
-  if (id == colors[pattern[currInd]]) {
-    pressedAudioName(id);
-    currInd++;
-    if (currInd == pattern.length) {
-      level++;
-      $("#level-title").text("Level " + level);
+  if (started) {
+    var id = $(this).attr("id");
+    pressedAnimationName(id);
+    if (id == colors[pattern[currInd]]) {
+      pressedAudioName(id);
+      currInd++;
+      if (currInd == pattern.length) {
+        level++;
+        $("#level-title").text("Level " + level);
+        currInd = 0;
+        addPattern();
+      }
+    } else {
+      pressedAudioName("wrong");
+      pattern = [];
+      started = false;
       currInd = 0;
-      addPattern();
+      level = 0;
+      $("#level-title").text("Game Over, Press Any Key to Restart");
     }
-  } else {
-    pressedAudioName("wrong");
-    pattern = [];
-    started = false;
-    currInd = 0;
-    level = 0;
-    $("#level-title").text("Game Over, Press Any Key to Restart");
   }
 });
